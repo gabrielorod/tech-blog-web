@@ -40,6 +40,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
       onClick={() => navigate(`/artigo/${article.id}`)}
       sx={{
         display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
         p: '16px',
         borderBottom: '1px solid #E6E8EB',
         cursor: 'pointer',
@@ -56,7 +57,15 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             borderRadius: '8px',
             flexShrink: 0,
           }}
-        />
+        >
+          {article.imageUrl ? (
+            <img
+              src={article.imageUrl}
+              alt={article.title}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          ) : null}
+        </Box>
 
         <Box sx={{ flexGrow: 1 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

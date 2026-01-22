@@ -7,8 +7,8 @@ import { TAGS, type TagCode } from '../utils/tags';
 interface ArticleFormProps {
   title: string;
   buttonLabel: string;
-  initialData?: { title: string; content: string; tags: TagCode[] };
-  onSubmit: (data: { title: string; content: string; tags: TagCode[] }) => void;
+  initialData?: { title: string; content: string; tags: TagCode[]; imageUrl?: string };
+  onSubmit: (data: { title: string; content: string; tags: TagCode[]; imageUrl?: string }) => void;
   isLoading?: boolean;
 }
 
@@ -23,9 +23,11 @@ export default function ArticleForm({
     title: string;
     content: string;
     tags: TagCode[];
+    imageUrl?: string;
   }>({
     title: initialData?.title || '',
     content: initialData?.content || '',
+    imageUrl: initialData?.imageUrl || '',
     tags: (initialData?.tags as TagCode[]) || [],
   });
 
@@ -79,6 +81,38 @@ export default function ArticleForm({
                   },
                 }}
               />
+            </Box>
+
+            <Box>
+              <Typography sx={{ fontFamily: 'Newsreader', fontWeight: 600, mb: 1 }}>
+                Imagem do Artigo
+              </Typography>
+              <TextField
+                fullWidth
+                placeholder="https://exemplo.com/imagem.jpg"
+                value={formData.imageUrl}
+                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                variant="standard"
+                InputProps={{
+                  disableUnderline: true,
+                  sx: {
+                    bgcolor: '#EDF2E8',
+                    borderRadius: '12px',
+                    p: '10px 16px',
+                    fontFamily: 'Newsreader',
+                  },
+                }}
+              />
+              {formData.imageUrl && (
+                <Box sx={{ mt: 2, borderRadius: '12px', overflow: 'hidden', maxHeight: '200px' }}>
+                  <img
+                    src={formData.imageUrl}
+                    alt="Preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => (e.currentTarget.style.display = 'none')} // Esconde se a URL for inválida
+                  />
+                </Box>
+              )}
             </Box>
 
             <Box>
