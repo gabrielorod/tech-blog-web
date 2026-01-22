@@ -3,21 +3,39 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import prettier from 'eslint-plugin-prettier/recommended'
 
-export default defineConfig([
-  globalIgnores(['dist']),
+export default tseslint.config(
+  { ignores: ['dist'] },
   {
-    files: ['**/*.{ts,tsx}'],
     extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
+      js.configs.recommended, 
+      ...tseslint.configs.recommended,
+      prettier
     ],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+      'prettier/prettier': ['error', {
+        'printWidth': 100,
+        'tabWidth': 2,
+        'singleQuote': true,
+        'trailingComma': 'all',
+        'arrowParens': 'always'
+      }],
+      '@typescript-eslint/no-explicit-any': 'error' // Proíbe o 'any' que você odeia
+    },
   },
-])
+)

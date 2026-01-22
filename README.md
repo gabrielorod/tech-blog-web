@@ -8,7 +8,7 @@ Frontend moderno e responsivo desenvolvido em React para o ecossistema TechBlog.
 - **Estilização:** [Material UI (MUI)](https://mui.com/) para componentes seguindo o design do Figma
 - **Estado Global & Cache:** [TanStack Query (React Query)](https://tanstack.com/query/latest)
 - **Navegação:** [React Router Dom](https://reactrouter.com/)
-- **Formulários:** [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) para validações
+- **Formulários:** [React Hook Form](https://react-hook-form.com/)
 - **Chamadas API:** [Axios](https://axios-http.com/) com interceptors para JWT
 
 ## 📋 Pré-requisitos

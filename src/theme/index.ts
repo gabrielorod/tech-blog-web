@@ -21,14 +21,14 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: '"Newsreader", "serif"',
-    h1: { 
-      fontSize: '2.5rem', 
+    h1: {
+      fontSize: '2.5rem',
       fontWeight: 700,
-      color: '#141C0D' 
+      color: '#141C0D',
     },
     h2: {
       fontWeight: 600,
-      color: '#141C0D'
+      color: '#141C0D',
     },
     body1: {
       color: '#758269',
@@ -37,7 +37,7 @@ export const theme = createTheme({
     button: {
       fontWeight: 600,
       color: '#FAFCF7',
-    }
+    },
   },
   components: {
     MuiButton: {
