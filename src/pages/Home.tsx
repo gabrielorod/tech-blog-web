@@ -16,30 +16,33 @@ import { getArticles } from '../api/articles';
 import SearchIcon from '@mui/icons-material/Search';
 import Header from '../components/Header';
 import ArticleCard from '../components/ArticleCard';
-import { TAGS_FILTER } from '../utils/tags';
+import { TAGS } from '../utils/tags';
+import type { TagCode } from '../utils/tags';
 
 export default function Home() {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState('');
   const [debouncedSearch] = useDebounce(search, 500);
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [selectedTag, setSelectedTag] = useState<TagCode | null>(null);
 
   const isAuthenticated = !!localStorage.getItem('tech-blog:token');
+
+  const selectedTagCode = selectedTag ?? undefined;
 
   const {
     data: response,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['articles', debouncedSearch, selectedTag, page, pageSize],
-    queryFn: () => getArticles(debouncedSearch, selectedTag || undefined, page, pageSize),
+    queryKey: ['articles', debouncedSearch, selectedTagCode, page, pageSize],
+    queryFn: () => getArticles(debouncedSearch, selectedTagCode, page, pageSize),
   });
 
-  const handleTagClick = (tag: string) => {
-    setSelectedTag(selectedTag === tag ? null : tag);
+  const handleTagClick = (code: TagCode) => {
+    setSelectedTag((prev) => (prev === code ? null : code));
     setPage(1);
   };
 
@@ -53,7 +56,14 @@ export default function Home() {
       <Header showLogout={isAuthenticated} />
 
       <Container maxWidth="lg" sx={{ py: 4, flexGrow: 1 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 3,
+          }}
+        >
           <Typography
             sx={{
               fontFamily: 'Newsreader',
@@ -74,10 +84,12 @@ export default function Home() {
                 borderRadius: '12px',
                 textTransform: 'none',
                 fontFamily: 'Newsreader',
-                display: { xs: 'none', md: 'flex' },
+                px: { xs: 2, md: 3 },
+                fontSize: { xs: '14px', md: '16px' },
                 '&:hover': { bgcolor: '#5a8d27' },
+                display: 'flex',
               }}
-              onClick={() => navigate('/novo-artigo')}
+              onClick={() => navigate('/artigo/criar')}
             >
               Criar artigo
             </Button>
@@ -117,23 +129,24 @@ export default function Home() {
             scrollbarWidth: 'none',
           }}
         >
-          {TAGS_FILTER.map((tag) => (
-            <Chip
-              key={tag}
-              label={tag}
-              onClick={() => handleTagClick(tag)}
-              sx={{
-                fontFamily: 'Newsreader',
-                fontWeight: 500,
-                bgcolor: selectedTag === tag ? '#67A22D' : '#EDF2E8',
-                color: selectedTag === tag ? '#FFFFFF' : '#141712',
-                borderRadius: '12px',
-                flexShrink: 0,
-                height: '32px',
-                border: 'none',
-              }}
-            />
-          ))}
+          {TAGS.map(({ label, code }) => {
+            const selected = selectedTag === code;
+
+            return (
+              <Chip
+                key={code}
+                label={label}
+                onClick={() => handleTagClick(code)}
+                sx={{
+                  fontFamily: 'Newsreader',
+                  fontWeight: 500,
+                  bgcolor: selected ? '#67A22D' : '#EDF2E8',
+                  color: selected ? '#FFFFFF' : '#141712',
+                  borderRadius: '12px',
+                }}
+              />
+            );
+          })}
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

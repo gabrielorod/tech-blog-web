@@ -48,14 +48,12 @@ export default function Header({ showLogout = true }: HeaderProps) {
                 startIcon={<LogoutIcon />}
                 sx={{
                   fontFamily: 'Newsreader',
+                  pr: 0,
                   fontWeight: 600,
                   fontSize: '14px',
-                  color: '#758269',
+                  color: '#141712',
+                  bgcolor: '#EDF2E8',
                   textTransform: 'none',
-                  '&:hover': {
-                    color: '#FF0000',
-                    bgcolor: 'transparent',
-                  },
                 }}
               />
             ) : (

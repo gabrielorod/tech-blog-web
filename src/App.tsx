@@ -5,6 +5,9 @@ import { theme } from './theme';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import ArticleDetails from './pages/ArticleDetails';
+import CreateArticle from './pages/CreateArticle';
+import EditArticle from './pages/EditArticle';
 
 const queryClient = new QueryClient();
 
@@ -19,6 +22,9 @@ function App() {
 
             <Route path="/login" element={<Login />} />
             <Route path="/artigos" element={<Home />} />
+            <Route path="/artigo/:id" element={<ArticleDetails />} />
+            <Route path="/artigo/criar" element={<CreateArticle />} />
+            <Route path="/artigo/editar/:id" element={<EditArticle />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

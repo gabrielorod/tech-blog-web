@@ -31,6 +31,17 @@ export interface PaginatedResponse<T> {
   };
 }
 
+export interface CreateArticleData {
+  title: string;
+  content: string;
+  tags: string[];
+}
+export interface UpdateArticleData {
+  title?: string;
+  content?: string;
+  tags?: string[];
+}
+
 export const getArticles = async (
   search?: string,
   tag?: string,
@@ -40,5 +51,23 @@ export const getArticles = async (
   const response = await api.get<PaginatedResponse<Article>>('/articles', {
     params: { search, tag, page, pageSize },
   });
+  return response.data;
+};
+
+export const getArticleById = async (id: string): Promise<Article> => {
+  const response = await api.get<Article>(`/articles/${id}`);
+  return response.data;
+};
+
+export const createArticle = async (data: CreateArticleData): Promise<Article> => {
+  const response = await api.post<Article>('/articles', data);
+  return response.data;
+};
+
+export const updateArticle = async (
+  id: string | number,
+  data: UpdateArticleData,
+): Promise<Article> => {
+  const response = await api.put<Article>(`/articles/${id}`, data);
   return response.data;
 };
