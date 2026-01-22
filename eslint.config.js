@@ -35,7 +35,7 @@ export default tseslint.config(
         'trailingComma': 'all',
         'arrowParens': 'always'
       }],
-      '@typescript-eslint/no-explicit-any': 'error' // Proíbe o 'any' que você odeia
+      '@typescript-eslint/no-explicit-any': 'error'
     },
   },
 )

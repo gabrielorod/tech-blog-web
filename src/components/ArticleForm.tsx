@@ -109,7 +109,7 @@ export default function ArticleForm({
                     src={formData.imageUrl}
                     alt="Preview"
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    onError={(e) => (e.currentTarget.style.display = 'none')} // Esconde se a URL for inválida
+                    onError={(e) => (e.currentTarget.style.display = 'none')}
                   />
                 </Box>
               )}
@@ -172,7 +172,7 @@ export default function ArticleForm({
               pt: 2,
               pb: 4,
               display: 'flex',
-              justifyContent: { xs: 'center', md: 'flex-start' }, // Centraliza no mobile, esquerda no desktop
+              justifyContent: { xs: 'center', md: 'flex-start' },
             }}
           >
             <Button
